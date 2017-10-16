@@ -16,7 +16,7 @@ kitchen = Room("Kitchen","A dark and dirty room with flies buzzing around. There
 
 # The kitchen has a CUPBOARD object that contains/hides 3 interactive items, a sponge, a plate, a can of soup
 # Once this container is open, the interactive items will no longer be hidden in the container
-kitchen.cupboard = Container("cupboard above the sink",["sponge","plate","can of "+u'\u0411\u043E\u0440\u0449'+" soup"])
+kitchen.cupboard = Container("cupboard above the sink",["sponge","plate","can of soup"])
 # The kitchen has a CABINET object that contains/hides 2 interactive items, a knife and a twinkie
 # Once this container is open, the interactive items will no longer be hidden in the container
 kitchen.cabinet = Container("cabinet under the sink",["knife","twinkie"])
@@ -35,7 +35,7 @@ redFlashlight = Flashlight("red",0,False)
 
 # Laboratory
 #
-auditorium = Room("Auditorium","A huge room that has very little lighting. You can hear the echos of mice running, and the support beams creaking. There is a CHEST behind stage that looks like it would have some clothing in it.")
+aud = Room("Auditorium","A huge room that has very little lighting. You can hear the echos of mice running, and the support beams creaking. There is a CHEST behind stage that looks like it would have some clothing in it.")
 # The lab has a SHELF object that contains 3 interactive items. Shelf gets a third argument because you'd say ON the shelf, not IN the shelf
 aud.chest = Container("In the chest you see a ROBIN HOOD COSTUME, a BOW, and some ARROWS.",["Robinhood Costume","Long Bow","quiver with arrows"],"in ")
 aud.create_room_item("Cars Flashlight")
@@ -55,11 +55,11 @@ kitchen.link_room(smalloffice, "SOUTH")
 kitchen.link_room(locked, "WEST")
 supplycloset.link_room(smalloffice, "EAST")
 smalloffice.link_room(kitchen, "NORTH")
-smalloffice.link_room(auditorium, "EAST")
+smalloffice.link_room(aud, "EAST")
 smalloffice.link_room(locked, "SOUTH")
 smalloffice.link_room(supplycloset, "WEST")
-auditorium.link_room(locked, "SOUTH")
-auditorium.link_room(smalloffice, "WEST")
+aud.link_room(locked, "SOUTH")
+aud.link_room(smalloffice, "WEST")
 current_room = kitchen
 
 # Set up characters
@@ -141,14 +141,14 @@ def checkUserInput(current_room,command,heldItems):
         # Open smalloffice.desk and concat each of the contents to the end of room_items
         current_room.room_items += smalloffice.package.open()
     elif current_room.name == "Small Office" and command == "READ":
-        print(u'\u0420\u043e\u0441\u0441\u0438\u044f\u262D'+" You can't read it. It's written is some strange Cyrillic script.")
+        print("You can't read it. It's written is some strange Cyrillic script.")
     elif current_room.name == "Small Office" and command == "DESK" and "brass key" in heldItems:
         # Open smalloffice.desk and concat each of the contents to the end of room_items
         print("You use the brass key to unlock the desk.")
         current_room.room_items += smalloffice.desk.open()
     elif current_room.name == "Small Office" and command == "DESK":
         print("The desk drawer is locked.")
-    elif current_room.name == "auditorium" and command == "CHEST":
+    elif current_room.name == "Auditorium" and command == "CHEST":
         # Open lab.shelf and concat each of the contents to the end of room_items
         current_room.room_items += aud.chest.open()
 
