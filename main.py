@@ -35,11 +35,11 @@ redFlashlight = Flashlight("red",0,False)
 
 # Laboratory
 #
-lab = Room("Laboratory","A bright room with sunlight shining through windows secured by prison bars. There is a messy SHELF on the north wall.")
+auditorium = Room("Auditorium","A huge room that has very little lighting. You can hear the echos of mice running, and the support beams creaking. There is a CHEST behind stage that looks like it would have some clothing in it.")
 # The lab has a SHELF object that contains 3 interactive items. Shelf gets a third argument because you'd say ON the shelf, not IN the shelf
-lab.shelf = Container("shelf",["brass key","spork","yellow flashlight"],"on")
-lab.create_room_item("rat")
-yellowFlashlight = Flashlight("yellow",1,True)
+aud.chest = Container("In the chest you see a ROBIN HOOD COSTUME, a BOW, and some ARROWS.",["Robinhood Costume","Long Bow","quiver with arrows"],"in ")
+aud.create_room_item("Cars Flashlight")
+carsFlashlight = Flashlight("Cars",1,True) 
 
 # Supply Closet
 #
@@ -47,7 +47,7 @@ supplycloset = Room("Supply Closet","A small dark room with a musty smell. On on
 
 # Create a fake room called locked that represents all permenently locked doors
 #
-locked = Room("locked","")
+locked = Room("locked","-")
 
 # Connect rooms. These are one-way connections.
 kitchen.link_room(locked, "EAST")
@@ -55,11 +55,11 @@ kitchen.link_room(smalloffice, "SOUTH")
 kitchen.link_room(locked, "WEST")
 supplycloset.link_room(smalloffice, "EAST")
 smalloffice.link_room(kitchen, "NORTH")
-smalloffice.link_room(lab, "EAST")
+smalloffice.link_room(auditorium, "EAST")
 smalloffice.link_room(locked, "SOUTH")
 smalloffice.link_room(supplycloset, "WEST")
-lab.link_room(locked, "SOUTH")
-lab.link_room(smalloffice, "WEST")
+auditorium.link_room(locked, "SOUTH")
+auditorium.link_room(smalloffice, "WEST")
 current_room = kitchen
 
 # Set up characters
@@ -148,9 +148,9 @@ def checkUserInput(current_room,command,heldItems):
         current_room.room_items += smalloffice.desk.open()
     elif current_room.name == "Small Office" and command == "DESK":
         print("The desk drawer is locked.")
-    elif current_room.name == "Laboratory" and command == "SHELF":
+    elif current_room.name == "auditorium" and command == "CHEST":
         # Open lab.shelf and concat each of the contents to the end of room_items
-        current_room.room_items += lab.shelf.open()
+        current_room.room_items += aud.chest.open()
 
     # ********************************* MOVE *********************************
     else:
